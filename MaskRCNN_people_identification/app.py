@@ -11,14 +11,22 @@ import pickle
 import cv2
 from flask import Flask, render_template, jsonify, request, redirect, url_for, flash
 
-os.chdir("C:/Users/Kevin Thelly/Documents/College/ifp_2/Mask_RCNN")
+# os.chdir("C:/Users/Kevin Thelly/Documents/College/ifp_2/Mask_RCNN")
 ROOT_DIR = os.path.abspath("../")
 sys.path.append(ROOT_DIR)  # To find local version of the library
 from mrcnn import utils
 import mrcnn.model as modellib
 from mrcnn import visualize
+cwd = os.getcwd()
+print("------------------------------")
+print(cwd)
 
-os.chdir("C:/Users/Kevin Thelly/Documents/College/ifp_2/Mask_RCNN/samples/coco")
+os.chdir("./coco")
+
+print("------------------------------")
+print(os.getcwd())
+
+
 
 # import coco
 from coco import coco
@@ -26,16 +34,12 @@ from coco import coco
 MODEL_DIR = os.path.join(ROOT_DIR, "logs")
 
 # Local path to trained weights file
-COCO_MODEL_PATH = "C:/Users/Kevin Thelly/Documents/College/ifp_2/Mask_RCNN/samples/coco/mask_rcnn_coco.h5"
+COCO_MODEL_PATH = "mask_rcnn_coco.h5"
 
 
 # Download COCO trained weights from Releases if needed
 if not os.path.exists(COCO_MODEL_PATH):
     utils.download_trained_weights(COCO_MODEL_PATH)
-
-# Directory of images to run detection on
-# IMAGE_DIR = os.path.join(ROOT_DIR, "images")
-# print(COCO_MODEL_PATH)
 
 
 class InferenceConfig(coco.CocoConfig):
@@ -71,12 +75,22 @@ class_names = ['BG', 'person', 'bicycle', 'car', 'motorcycle', 'airplane',
                'teddy bear', 'hair drier', 'toothbrush']
 # class_names=['BG','person']
 
-os.chdir('C:/Users/Kevin Thelly/Documents/College/ifp_2/Mask_RCNN/ifp/Server')
+print("-----------------")
+os.chdir("../")
+print(os.getcwd())
 
 #people alone
 def people():
-  image = cv2.imread('C:/Users/Kevin Thelly/Documents/College/ifp_2/Mask_RCNN/ifp/images/mohan.jpg')
-  dimensions=(image.shape)
+  os.chdir("./images")
+  print("----------------")
+  print(os.getcwd())
+  image = cv2.imread('mohan.jpg')
+  
+  os.chdir("../")
+  print("----------------")
+  print(os.getcwd())
+  # dimensions=image.shape
+  # print(dimensions)
   # Run detection
   print("-----------------------------------")
   print("Image read classbench")
@@ -130,7 +144,7 @@ def people():
   # print(fig_size)
   # os.chdir("")
   # cv2.imwrite('C:/Users/Kevin Thelly/Documents/College/ifp_2/Mask_RCNN/ifp_model/image.png',bbox_inches='tight', pad_inches=-0.5,orientation= 'landscape')
-  cv2.imwrite('C:/Users/Kevin Thelly/Documents/College/ifp_2/Mask_RCNN/ifp_model/image.png',image)
+  cv2.imwrite('./devimages/image.png',image)
   # png('C:/Users/Kevin Thelly/Documents/College/ifp_2/Mask_RCNN/ifp_model/image.png', width = 800, height = 600)
   # plt.savefig('C:/Users/Kevin Thelly/Documents/College/ifp_2/Mask_RCNN/ifp_model/foo.png', bbox_inches='tight')
   # os.chdir("C:/Users/Kevin Thelly/Documents/College/ifp_2/Mask_RCNN//ifp/Server")
